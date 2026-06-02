@@ -1,0 +1,1415 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>caffein lyai</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Poppins:wght@600&family=Irish+Grover&display=swap" rel="stylesheet">
+  <style>
+    
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    html { 
+      scroll-behavior: smooth; 
+    }
+    
+    body { 
+      background: #F0E1CE; 
+      font-family: 'Inter', sans-serif; 
+      color: #000; 
+      overflow-x: hidden; 
+    }
+    
+    .container { 
+      max-width: 1440px; 
+      margin: 0 auto; 
+      padding: 2rem 4rem; 
+    }
+
+    section { 
+      padding: 5rem 0; 
+      min-height: 80vh; 
+      scroll-margin-top: 120px; 
+    }
+
+    .section-title { 
+      color: #84633C; 
+      font-size: 2.75rem; 
+      font-family: 'Playfair Display', serif; 
+      font-weight: 700; 
+      margin-bottom: 3rem; 
+    }
+
+    .order-btn { 
+      padding: 1.2rem 3rem; 
+      background: linear-gradient(90deg, #FB9763 19%, #A56A4B 100%); 
+      border: none; 
+      border-radius: 5px; 
+      color: white; 
+      font-size: 1.3rem; 
+      font-family: 'Poppins', sans-serif; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: transform 0.2s, box-shadow 0.2s; 
+    }
+    
+    .order-btn:hover { 
+      transform: translateY(-4px); 
+      box-shadow: 0 8px 20px rgba(165,106,75,0.3); 
+    }
+
+    .page-view { 
+      display: none; 
+    }
+    
+    .page-view.active-view { 
+      display: block; 
+    }
+
+    .header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1.5rem 4rem; 
+      position: sticky; 
+      top: 0; 
+      background: #F0E1CE; 
+      z-index: 1000; 
+      border-bottom: 1px solid rgba(0,0,0,0.05); 
+    }
+    
+    .logo { 
+      width: 70px; 
+      height: 70px; 
+      object-fit: contain; 
+      cursor: pointer; 
+    }
+    
+    .nav { 
+      display: flex; 
+      gap: 3rem; 
+      align-items: center; 
+    }
+    
+    .nav-link { 
+      color: black; 
+      font-size: 1.25rem; 
+      font-weight: 500; 
+      text-decoration: none; 
+      cursor: pointer; 
+      transition: opacity 0.2s; 
+      position: relative; 
+    }
+    
+    .nav-link:hover, .nav-link.active { 
+      opacity: 0.7; 
+    }
+    
+    .nav-link.active::after { 
+      content: ''; 
+      position: absolute; 
+      bottom: -8px; 
+      left: 0; 
+      width: 100%; 
+      height: 2px; 
+      background: #D98C62; 
+    }
+
+    .header-actions { 
+      display: flex; 
+      align-items: center; 
+      gap: 1.5rem; 
+    }
+    
+    .cart { 
+      position: relative; 
+      cursor: pointer; 
+      padding: 0.5rem; 
+    }
+    
+    .cart-count { 
+      position: absolute; 
+      top: -5px; 
+      right: -5px; 
+      background: #D98C62; 
+      color: white; 
+      font-size: 0.75rem; 
+      width: 20px; 
+      height: 20px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-weight: 600; 
+    }
+    
+    .login-btn { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      padding: 0.7rem 1.5rem; 
+      background: transparent; 
+      border: 1px solid black; 
+      border-radius: 20px; 
+      font-size: 1rem; 
+      font-weight: 500; 
+      cursor: pointer; 
+      transition: all 0.2s; 
+    }
+    
+    .login-btn:hover { 
+      background: black; 
+      color: #F0E1CE; 
+    }
+
+    .hamburger { 
+      display: none; 
+      flex-direction: column; 
+      gap: 5px; 
+      cursor: pointer; 
+    }
+    
+    .hamburger span { 
+      width: 25px; 
+      height: 2px; 
+      background: black; 
+      transition: 0.3s; 
+    }
+
+    #home .hero { 
+      display: grid; 
+      grid-template-columns: 1.2fr 1fr; 
+      gap: 2rem; 
+      align-items: center; 
+      min-height: calc(100vh - 180px); 
+    }
+    
+    .hero-content { 
+      z-index: 2; 
+    }
+    
+    .hero-title { 
+      color: #D98C62; 
+      font-size: clamp(3rem, 7vw, 7rem); 
+      font-family: 'Playfair Display', serif; 
+      font-weight: 700; 
+      line-height: 1.1; 
+      margin-bottom: 3rem; 
+    }
+    
+    .hero-images { 
+      position: relative; 
+      height: 500px; 
+    }
+    
+    .coffee-img-1 { 
+      width: 90%; 
+      position: absolute; 
+      right: 30%; 
+      top: 0; 
+      transform: rotate(8deg); 
+      z-index: 1; 
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); 
+    }
+    
+    .coffee-img-2 { 
+      width: 110%; 
+      position: absolute; 
+      right: -10%; 
+      top: 10%; 
+      z-index: 2; 
+      filter: drop-shadow(0 30px 40px rgba(0,0,0,0.2)); 
+    }
+
+    #about .about-content { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 4rem; 
+      align-items: center; 
+    }
+    
+    .about-gallery { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 1rem; 
+    }
+    
+    .about-img { 
+      width: 100%; 
+      border-radius: 10px; 
+      box-shadow: 20px 20px 40px rgba(0,0,0,0.1); 
+      object-fit: cover; 
+      height: 350px; 
+    }
+    
+    .about-text h2 { 
+      color: #FB9763; 
+      font-size: clamp(3rem, 5vw, 5rem); 
+      font-family: 'Playfair Display', serif; 
+      margin-bottom: 1.5rem; 
+    }
+    
+    .about-text p { 
+      font-size: 1.125rem; 
+      line-height: 1.7; 
+      margin-bottom: 1rem; 
+      color: #3d2f22; 
+    }
+    
+    .product-wrapper { 
+      overflow-x: auto; 
+      padding-bottom: 10px; 
+    }
+    
+    .product-grid { 
+      display: grid; 
+      grid-template-columns: repeat(4, minmax(280px, 1fr)); 
+      gap: 20px; 
+    }
+    
+    .product-card { 
+      background: #FFE9CA; 
+      border-radius: 15px; 
+      padding: 16px; 
+      box-shadow: 0px 4px 4px rgba(178, 169, 161, 0.5); 
+      transition: transform 0.2s, box-shadow 0.2s; 
+    }
+    
+    .product-card:hover { 
+      transform: translateY(-4px); 
+      box-shadow: 0px 8px 12px rgba(178, 169, 161, 0.6); 
+    }
+    
+    .product-img { 
+      width: 100%; 
+      aspect-ratio: 4/3; 
+      object-fit: cover; 
+      border-radius: 10px; 
+      margin-bottom: 10px; 
+    }
+    
+    .product-name { 
+      font-size: 1.25rem; 
+      font-weight: 900; 
+      margin-bottom: 10px; 
+    }
+    
+    .product-desc { 
+      font-size: 0.875rem; 
+      font-weight: 500; 
+      line-height: 1.4; 
+      margin-bottom: 16px; 
+      color: #5a4a3a; 
+      min-height: 60px;
+    }
+    
+    .product-footer { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+    }
+    
+    .product-icon { 
+      width: 36px; 
+      height: 36px; 
+      cursor: pointer; 
+      transition: transform 0.2s; 
+      stroke: #84633C; 
+    }
+    
+    .product-icon:hover { 
+      transform: scale(1.1); 
+    }
+    
+    .product-price { 
+      font-size: 1.125rem; 
+      font-family: 'Playfair Display', serif; 
+      font-weight: 600; 
+    }
+
+    #menu .menu-title { 
+      color: #D98C62; 
+      font-size: 2.5rem; 
+      font-family: 'Irish Grover', cursive; 
+      font-weight: 400; 
+      margin-bottom: 2.5rem; 
+    }
+    
+    .menu-grid { 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 30px 40px; 
+    }
+    
+    .menu-item { 
+      display: flex; 
+      align-items: center; 
+      gap: 16px; 
+      cursor: pointer; 
+      padding: 10px; 
+      border-radius: 10px; 
+      transition: background 0.2s, transform 0.2s; 
+      position: relative; 
+    }
+    
+    .menu-item:hover { 
+      background: rgba(217,140,98,0.1); 
+      transform: translateX(4px); 
+    }
+    
+    .menu-img { 
+      width: 100px; 
+      height: 80px; 
+      object-fit: cover; 
+      border-radius: 15px; 
+      flex-shrink: 0; 
+    }
+    
+    .menu-info { 
+      flex-grow: 1; 
+    }
+    
+    .menu-name { 
+      font-size: 1.3rem; 
+      font-weight: 500; 
+      margin-bottom: 6px; 
+    }
+    
+    .menu-line { 
+      font-size: 1.3rem; 
+      font-weight: 500; 
+      margin: 4px 0; 
+      letter-spacing: -2px; 
+      color: #84633C; 
+      opacity: 0.3; 
+    }
+    
+    .menu-price { 
+      font-size: 1.1rem; 
+      font-weight: 600; 
+      margin-top: 6px; 
+    }
+
+    /* CART SIDEBAR */
+    .cart-sidebar { 
+      position: fixed; 
+      top: 0; 
+      right: -400px; 
+      width: 350px; 
+      height: 100%; 
+      background: #FFE9CA; 
+      box-shadow: -4px 0 20px rgba(0,0,0,0.1); 
+      z-index: 2000; 
+      transition: right 0.3s; 
+      padding: 2rem; 
+      overflow-y: auto; 
+    }
+    
+    .cart-sidebar.active { 
+      right: 0; 
+    }
+    
+    .cart-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 2rem; 
+    }
+    
+    .cart-header h3 { 
+      font-family: 'Playfair Display', serif; 
+      font-size: 1.5rem; 
+      color: #84633C; 
+    }
+    
+    .cart-item { 
+      display: flex; 
+      gap: 1rem; 
+      margin-bottom: 1rem; 
+      padding-bottom: 1rem; 
+      border-bottom: 1px solid rgba(0,0,0,0.1); 
+      align-items: center; 
+    }
+    
+    .cart-item img { 
+      width: 60px; 
+      height: 60px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+    }
+    
+    .cart-total { 
+      margin-top: 2rem; 
+      font-weight: 700; 
+      font-size: 1.2rem; 
+      text-align: right; 
+    }
+
+    /* MODALS */
+    .modal { 
+      display: none; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0,0,0,0.6); 
+      z-index: 2000; 
+      align-items: center; 
+      justify-content: center; 
+      backdrop-filter: blur(4px); 
+    }
+    
+    .modal.active { 
+      display: flex; 
+    }
+    
+    .modal-content { 
+      background: #F0E1CE; 
+      padding: 2.5rem; 
+      border-radius: 20px; 
+      width: 90%; 
+      max-width: 400px; 
+      position: relative; 
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
+      text-align: center; 
+    }
+    
+    .modal-close { 
+      position: absolute; 
+      top: 15px; 
+      right: 20px; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+    }
+    
+    .modal h2 { 
+      font-family: 'Playfair Display', serif; 
+      color: #84633C; 
+      margin-bottom: 1.5rem; 
+    }
+    
+    .modal input { 
+      width: 100%; 
+      padding: 0.8rem; 
+      margin-bottom: 1rem; 
+      border: 1px solid #d9c7b0; 
+      border-radius: 8px; 
+      font-size: 1rem; 
+      background: white; 
+    }
+    
+    .modal button { 
+      width: 100%; 
+      padding: 0.9rem; 
+      background: #D98C62; 
+      color: white; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 1rem; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: background 0.2s; 
+    }
+    
+    .modal button:hover { 
+      background: #c47a52; 
+    }
+    
+    .toast { 
+      position: fixed; 
+      bottom: 30px; 
+      right: 30px; 
+      background: #84633C; 
+      color: white; 
+      padding: 1rem 1.5rem; 
+      border-radius: 10px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+      transform: translateY(150%); 
+      transition: transform 0.3s; 
+      z-index: 3000; 
+      font-weight: 500; 
+      pointer-events: none; 
+    }
+    
+    .toast.show { 
+      transform: translateY(0); 
+    }
+
+    /* CHECKOUT PAGE */
+    .checkout-layout { 
+      display: grid; 
+      grid-template-columns: 1fr 1.2fr; 
+      gap: 4rem; 
+      padding-top: 2rem; 
+    }
+    
+    .payment-section-title { 
+      font-size: 2rem; 
+      font-weight: 600; 
+      margin-bottom: 2rem; 
+      color: #84633C; 
+      font-family: 'Playfair Display', serif; 
+    }
+    
+    .payment-method-item { 
+      display: flex; 
+      align-items: center; 
+      background: rgba(239, 209, 209, 0.4); 
+      margin-bottom: 20px; 
+      padding: 15px 25px; 
+      border-radius: 15px; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+      border: 2px solid transparent; 
+    }
+    
+    .payment-method-item:hover { 
+      background: rgba(239, 209, 209, 0.7); 
+    }
+    
+    .payment-method-item.selected { 
+      border-color: #FB9763; 
+      background: #EFD1D1; 
+    }
+    
+    .payment-icon { 
+      width: 70px; 
+      height: 50px; 
+      object-fit: contain; 
+      margin-right: 20px; 
+    }
+    
+    .payment-name { 
+      font-size: 1.3rem; 
+      font-weight: 500; 
+      color: #000000; 
+      flex-grow: 1; 
+    }
+    
+    .custom-radio { 
+      width: 25px; 
+      height: 25px; 
+      border: 3px solid #969595; 
+      border-radius: 50%; 
+      transition: all 0.3s ease; 
+      flex-shrink: 0;
+    }
+    
+    .payment-method-item.selected .custom-radio { 
+      border-color: #A56A4B; 
+      background-color: #FB9763; 
+    }
+
+    .info-card { 
+      background: #EFD1D1; 
+      border-radius: 20px; 
+      padding: 30px; 
+      margin-bottom: 25px; 
+    }
+    
+    .card-row { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 20px; 
+    }
+    
+    .card-row:last-child { 
+      margin-bottom: 0; 
+    }
+    
+    .label-large { 
+      font-size: 1.3rem; 
+      font-weight: 500; 
+    }
+    
+    .value-medium { 
+      font-size: 1.2rem; 
+      font-weight: 400; 
+      text-align: right; 
+    }
+    
+    .divider { 
+      width: 100%; 
+      height: 2px; 
+      background-color: #C5B8B8; 
+      margin: 20px 0; 
+    }
+
+    .note-input { 
+      width: 100%; 
+      background: transparent; 
+      border: none; 
+      border-bottom: 1px dashed #84633C; 
+      font-size: 1rem; 
+      padding: 5px 0; 
+      outline: none; 
+      color: #3d2f22; 
+    }
+
+    .qris-container { 
+      display: none; 
+      margin-top: 15px; 
+      text-align: center; 
+      background: white; 
+      padding: 15px; 
+      border-radius: 10px; 
+      border: 1px solid #ddd; 
+    }
+    
+    .qris-container.active { 
+      display: block; 
+    }
+    
+    .qris-barcode { 
+      width: 200px; 
+      height: 200px; 
+      object-fit: contain; 
+      margin: 0 auto 10px; 
+      display: block; 
+    }
+
+    .qris-action-box {
+      margin-bottom: 15px;
+    }
+    .qris-input-field {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #84633C;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .qris-gen-btn {
+      padding: 8px 16px;
+      background: #84633C;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+      .checkout-layout { 
+        grid-template-columns: 1fr; 
+        gap: 2rem; 
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .container, .header { 
+        padding: 1rem 1.5rem; 
+      }
+      
+      .nav { 
+        position: absolute; 
+        top: 100%; 
+        left: 0; 
+        width: 100%; 
+        background: #F0E1CE; 
+        flex-direction: column; 
+        padding: 1rem; 
+        gap: 1rem; 
+        transform: translateY(-150%); 
+        transition: transform 0.3s; 
+        border-bottom: 1px solid rgba(0,0,0,0.1); 
+      }
+      
+      .nav.active { 
+        transform: translateY(0); 
+      }
+      
+      .hamburger { 
+        display: flex; 
+      }
+      
+      .hero-title { 
+        font-size: 2.8rem; 
+      }
+      
+      #home .hero { 
+        grid-template-columns: 1fr; 
+        text-align: center; 
+      }
+      
+      .hero-images { 
+        height: 350px; 
+        margin-top: 2rem; 
+      }
+      
+      .coffee-img-1 { 
+        width: 70%; 
+        right: 25%; 
+      }
+      
+      .coffee-img-2 { 
+        width: 80%; 
+        right: 0; 
+      }
+      
+      .menu-grid { 
+        grid-template-columns: 1fr; 
+      }
+      
+      section { 
+        padding: 3rem 0; 
+        min-height: auto; 
+      }
+      
+      .product-grid { 
+        grid-template-columns: 1fr; 
+      }
+      
+      .cart-sidebar { 
+        width: 100%; 
+        right: -100%; 
+      }
+      
+      #about .about-content { 
+        grid-template-columns: 1fr; 
+        gap: 2rem; 
+      }
+      
+      .about-gallery { 
+        grid-template-columns: 1fr; 
+      }
+      
+      .about-img { 
+        height: 250px; 
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <img class="logo" src="logo.png" alt="Coffee Logo" id="brandLogo">
+    
+    <nav class="nav" id="nav">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#about" class="nav-link">About us</a>
+      <a href="#bestseller" class="nav-link">Bestseller</a>
+      <a href="#menu" class="nav-link">Menu</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart" id="cartBtn" aria-label="Keranjang">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+      
+      <button class="login-btn" id="loginBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Log in</span>
+      </button>
+      
+      <div class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <div id="shopPage" class="page-view active-view">
+    
+    <section id="home">
+      <div class="container">
+        <div class="hero">
+          <div class="hero-content">
+            <h1 class="hero-title">Take A Break<br>Have The Best Coffee</h1>
+            <button class="order-btn" id="orderNowBtn">order now</button>
+          </div>
+          <div class="hero-images">
+            <img class="coffee-img-1" src="biji kopi.png" alt="Coffee Beans">
+            <img class="coffee-img-2" src="coffe.png" alt="Coffee Cup">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-gallery">
+
+            <img class="about-img" src="coffe caramel.png" alt="About Coffee 1">
+            <img class="about-img" src="baru.png" alt="Coffee Cup 2">
+
+          <div class="about-text">
+            <h2>discover our newest products</h2>
+            <p>Selamat datang di caffein lyai di mana aroma kopi bertemu dengan cita rasa istimewa. Nikmati berbagai pilihan minuman dan hidangan berkualitas yang siap menemani Anda dengan kehangatan dan kenikmatan.</p>
+            <button class="order-btn" style="margin-top: 1rem;" id="seeMoreBtn">See More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="bestseller">
+      <div class="container">
+        <h1 class="section-title">Bestseller</h1>
+        <div class="product-wrapper">
+          <div class="product-grid">
+            
+            <div class="product-card" data-name="Long Macchiato 1" data-price="30000" data-img="https://i.pinimg.com/1200x/d3/ae/ba/d3aebad88a7f989dd78dafb7a343d62f.jpg">
+              <img src="https://i.pinimg.com/1200x/d3/ae/ba/d3aebad88a7f989dd78dafb7a343d62f.jpg" alt="Long Macchiato" class="product-img">
+              <h2 class="product-name">Long Macchiato</h2>
+              <p class="product-desc">Kami menggabungkan espresso khas kami dengan susu creamy sebagai pilihan minuman harian favoritmu yang cocok dinikmati saat disajikan panas maupun dingin.</p>
+              <div class="product-footer">
+                <svg class="product-icon add-to-cart-btn" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <span class="product-price">Rp30.000</span>
+              </div>
+            </div>
+
+            <div class="product-card" data-name="Long macchiato" data-price="30000" data-img="https://i.pinimg.com/736x/ae/2c/31/ae2c317e92a531740719675c0674656b.jpg">
+              <img src="https://i.pinimg.com/736x/ae/2c/31/ae2c317e92a531740719675c0674656b.jpg" alt="long macchiato" class="product-img">
+              <h2 class="product-name">Long Macchiato</h2>
+              <p class="product-desc">Kami menggabungkan espresso khas kami dengan susu creamy sebagai pilihan minuman harian favoritmu yang cocok dinikmati saat disajikan panas maupun dingin.</p>
+              <div class="product-footer">
+                <svg class="product-icon add-to-cart-btn" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <span class="product-price">Rp30.000</span>
+              </div>
+            </div>
+
+            <div class="product-card" data-name="long macchiato" data-price="30000" data-img="https://i.pinimg.com/1200x/9e/56/0c/9e560cdb73ae2abfd80577e093f8335b.jpg">
+              <img src="https://i.pinimg.com/1200x/9e/56/0c/9e560cdb73ae2abfd80577e093f8335b.jpg" alt="Long Macchiato" class="product-img">
+              <h2 class="product-name">long macchiato</h2>
+              <p class="product-desc">Kami menggabungkan espresso khas kami dengan susu creamy sebagai pilihan minuman harian favoritmu yang cocok dinikmati saat disajikan panas maupun dingin.</p>
+              <div class="product-footer">
+                <svg class="product-icon add-to-cart-btn" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <span class="product-price">Rp30.000</span>
+              </div>
+            </div>
+
+            <div class="product-card" data-name="Long Macchiato 2" data-price="30000" data-img="https://i.pinimg.com/1200x/51/cd/47/51cd47f07809509147fc3c523dca2efa.jpg">
+              <img src="https://i.pinimg.com/1200x/51/cd/47/51cd47f07809509147fc3c523dca2efa.jpg" alt="Long Macchiato" class="product-img">
+              <h2 class="product-name">Long Macchiato</h2>
+              <p class="product-desc">Kami menggabungkan espresso khas kami dengan susu creamy sebagai pilihan minuman harian favoritmu yang cocok dinikmati saat disajikan panas maupun dingin.</p>
+              <div class="product-footer">
+                <svg class="product-icon add-to-cart-btn" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <span class="product-price">Rp30.000</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="container">
+        <h1 class="menu-title">Our Menu</h1>
+        <div class="menu-grid">
+          
+          <div class="menu-item" data-name="White Mocha Coffee" data-price="22000" data-img="https://i.pinimg.com/1200x/60/f8/ae/60f8ae06e91c1da1088e55c39f013e80.jpg">
+            <img src="https://i.pinimg.com/1200x/60/f8/ae/60f8ae06e91c1da1088e55c39f013e80.jpg" class="menu-img" alt="White Mocha">
+            <div class="menu-info">
+              <h2 class="menu-name">White Mocha Coffee</h2>
+              <p class="menu-line">- - - - - - - - - -</p>
+              <p class="menu-price">Rp 22.000</p>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="Americano" data-price="18500" data-img="https://i.pinimg.com/736x/e9/b7/e5/e9b7e596d74785a154e8634f7f841937.jpg">
+            <img src="https://i.pinimg.com/736x/e9/b7/e5/e9b7e596d74785a154e8634f7f841937.jpg" class="menu-img" alt="Americano">
+            <div class="menu-info">
+              <h2 class="menu-name">Americano</h2>
+              <p class="menu-line">- - - - - - - - - -</p>
+              <p class="menu-price">Rp 19.000</p>
+            </div>
+          </div>
+
+                   <div class="menu-item" data-name="Cortado" data-price="19000" data-img="https://i.pinimg.com/1200x/2f/15/bf/2f15bf620628090eedcece52dd95ad85.jpg">
+            <img src="https://i.pinimg.com/1200x/2f/15/bf/2f15bf620628090eedcece52dd95ad85.jpg" class="menu-img" alt="Cortado">
+            <div class="menu-info">
+              <h2 class="menu-name">Cortado</h2>
+              <p class="menu-line">- - - - - - - - - - - - -</p>
+              <p class="menu-price">Rp 20.000</p>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="White Mocha Ice" data-price="20000" data-img="https://i.pinimg.com/1200x/c9/78/ea/c978ea9ad23b67595f2ede70c0c9f643.jpg">
+            <img src="https://i.pinimg.com/1200x/c9/78/ea/c978ea9ad23b67595f2ede70c0c9f643.jpg" class="menu-img" alt="White mocha ice">
+            <div class="menu-info">
+              <h2 class="menu-name">White Mocha Ice</h2>
+              <p class="menu-line">- - - - - - -</p>
+              <p class="menu-price">Rp 25.000</p>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="Affogato Coffee" data-price="26000" data-img="https://i.pinimg.com/1200x/de/9c/54/de9c546ab2e05e8454eb9f824da7986c.jpg">
+            <img src="https://i.pinimg.com/1200x/de/9c/54/de9c546ab2e05e8454eb9f824da7986c.jpg" class="menu-img" alt="Affogato">
+            <div class="menu-info">
+              <h2 class="menu-name">Affogato Coffee</h2>
+              <p class="menu-line">- - - - - - - - - -</p>
+              <p class="menu-price">Rp 27.000</p>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="Coffee Latte" data-price="28000" data-img="https://i.pinimg.com/736x/7b/b1/fe/7bb1fee5a78addc3f941547bd97bf29b.jpg">
+            <img src="https://i.pinimg.com/736x/7b/b1/fe/7bb1fee5a78addc3f941547bd97bf29b.jpg" class="menu-img" alt="Coffee Latte">
+            <div class="menu-info">
+              <h2 class="menu-name">Coffee Latte</h2>
+              <p class="menu-line">- - - - - - -</p>
+              <p class="menu-price">Rp 28.000</p>
+            </div>
+          </div>
+
+            <div class="menu-item" data-name="Long Macchiato" data-price="30000" data-img="https://i.pinimg.com/1200x/c3/f4/ec/c3f4ecfd00267352b873438995008ba2.jpg">
+            <img src="https://i.pinimg.com/1200x/c3/f4/ec/c3f4ecfd00267352b873438995008ba2.jpg" class="menu-img" alt="Long Macchiato">
+            <div class="menu-info">
+              <h2 class="menu-name">Long Macchiato</h2>
+              <p class="menu-line">- - - - - - - - - -</p>
+              <p class="menu-price">Rp 30.000</p>
+            </div>
+          </div>
+
+
+          <div class="menu-item" data-name="Americano Lemon" data-price="24000" data-img="https://i.pinimg.com/1200x/1f/97/ac/1f97ac497218ea3df9954881703e02c9.jpg">
+            <img src="https://i.pinimg.com/1200x/1f/97/ac/1f97ac497218ea3df9954881703e02c9.jpg" class="menu-img" alt="Americano Lemon">
+            <div class="menu-info">
+              <h2 class="menu-name">Americano Lemon</h2>
+              <p class="menu-line">- - - - - - -</p>
+              <p class="menu-price">Rp 24.000</p>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="Cappucino" data-price="23000" data-img="https://i.pinimg.com/736x/f0/65/5f/f0655f2737da76be9b4ac435c65e3d9b.jpg">
+            <img src="https://i.pinimg.com/736x/f0/65/5f/f0655f2737da76be9b4ac435c65e3d9b.jpg" class="menu-img" alt="Cappucino">
+            <div class="menu-info">
+              <h2 class="menu-name">Cappucino</h2>
+              <p class="menu-line">- - - - - - - - - -</p>
+              <p class="menu-price">Rp 23.000</p>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="caramel coffe" data-price="26000" data-img="https://i.pinimg.com/736x/72/48/fe/7248fec44c0f24d2886da1fb47804f8c.jpg">
+            <img src="https://i.pinimg.com/736x/72/48/fe/7248fec44c0f24d2886da1fb47804f8c.jpg" class="menu-img" alt="carmel coffe">
+            <div class="menu-info">
+              <h2 class="menu-name">caramel coffe</h2>
+              <p class="menu-line">- - - - - - - - - -</p>
+              <p class="menu-price">Rp 30.000</p>
+            </div>
+          </div>
+
+  <div class="menu-item" data-name="Dallgona coffe" data-price="32000" data-img="https://i.pinimg.com/1200x/63/87/e2/6387e26f44819aaaae152ca978d1b25b.jpg">
+            <img src="https://i.pinimg.com/1200x/63/87/e2/6387e26f44819aaaae152ca978d1b25b.jpg" class="menu-img" alt="Dallgona coffe">
+            <div class="menu-info">
+              <h2 class="menu-name">Dallgona Coffee</h2>
+              <p class="menu-line">- - - - - - - - - -</p>
+              <p class="menu-price">Rp 32.000</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="checkoutPage" class="page-view">
+    <div class="container">
+      <div class="checkout-layout">
+        
+        <div>
+          <h2 class="payment-section-title">Payment Method</h2>
+          
+          <div class="payment-method-item selected" onclick="togglePaymentSelection(this, 'chas')">
+            <img class="payment-icon" src="cash.png" alt="Cash" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2489/2489756.png'" />
+            <span class="payment-name">COD</span>
+            <div class="custom-radio"></div>
+          </div>
+
+          <div class="payment-method-item" onclick="togglePaymentSelection(this, 'dana')">
+            <img class="payment-icon" src="dana.png" alt="Dana" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2489/2489756.png'" />
+            <span class="payment-name">Dana</span>
+            <div class="custom-radio"></div>
+          </div>
+
+          <div class="payment-method-item" onclick="togglePaymentSelection(this, 'gopay')">
+            <img class="payment-icon" src="gopay.png" alt="Gopay" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2489/2489756.png'" />
+            <span class="payment-name">Gopay</span>
+            <div class="custom-radio"></div>
+          </div>
+
+          <div class="payment-method-item" onclick="togglePaymentSelection(this, 'qris')">
+            <img class="payment-icon" src="qris.png" alt="Qris" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3596/3596041.png'" />
+            <span class="payment-name">Qris</span>
+            <div class="custom-radio"></div>
+          </div>
+
+          <div class="qris-container" id="qrisBarcodeBox">
+            <div class="qris-action-box">
+              <p style="font-weight: 600; margin-bottom: 5px; color: #84633C;">Nominal Pembayaran:</p>
+              <input type="number" class="qris-input-field" id="qrisInputAmount" placeholder="Masukkan nominal">
+              <button class="qris-gen-btn" onclick="generateQrisDynamic()">Generate QRIS</button>
+            </div>
+            
+            <div id="qrisQrCodeWrapper" style="display: none; margin-top: 15px;">
+              <p style="font-weight: 600; margin-bottom: 10px; color: #84633C;">Silakan Scan QRIS:</p>
+              <img class="qris-barcode" id="qrisGeneratedImage" src="" alt="QRIS Barcode" />
+              <p style="font-size: 0.85rem; color: #666;">Scan menggunakan aplikasi e-wallet Anda</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="payment-section-title">Summary of Information</h2>
+          
+          <div class="info-card">
+            <div class="card-row">
+              <span class="label-large">Additional notes:</span>
+              <input type="text" class="note-input" id="customerNote" placeholder="Leave a note (e.g., Less sugar, extra ice)...">
+            </div>
+            <div class="divider" style="background-color: #969595; margin: 15px 0;"></div>
+            <div class="card-row">
+              <span class="label-large">total Menu</span>
+              <span class="value-medium" id="summaryItemsTotal">Rp0</span>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="card-row">
+              <span class="label-large">Service Tax (10%)</span>
+              <span class="value-medium" id="summaryTax">Rp0</span>
+            </div>
+            <div class="card-row">
+              <span class="label-large">Subtotal</span>
+              <span class="value-medium" id="summarySubtotal">Rp0</span>
+            </div>
+            <div class="divider"></div>
+            <div class="card-row">
+              <span class="label-large" style="font-weight: 700;">Total payment</span>
+              <span class="value-medium" id="summaryFinalTotal" style="font-weight: 700; font-size: 1.8rem; color: #A56A4B;">Rp0</span>
+            </div>
+          </div>
+
+          <button class="order-btn" style="width: 100%; padding: 1.2rem;" id="finalConfirmBtn">Confirm & pay</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="modal-close" id="closeModal">&times;</span>
+      <h2>Log in</h2>
+      <input type="text" id="username" placeholder="Email atau username" autocomplete="username">
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+      <button id="submitLogin">login</button>
+    </div>
+  </div>
+
+  <div class="modal" id="pinModal">
+    <div class="modal-content" style="max-width: 350px;">
+      <span class="modal-close" id="closePinModal">&times;</span>
+      <h2 id="pinModalTitle" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Masukkan PIN</h2>
+      <p id="pinModalSub" style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Konfirmasi pembayaran aman</p>
+      <input type="password" id="walletPin" maxlength="6" placeholder="******" style="text-align: center; font-size: 2rem; letter-spacing: 10px; padding: 0.5rem;">
+      <button id="submitPinBtn" style="margin-top: 1rem;">Verifikasi & pay</button>
+    </div>
+  </div>
+
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Keranjang</h3>
+      <span id="closeCart" style="cursor:pointer;font-size:1.5rem;">&times;</span>
+    </div>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Total: Rp0</div>
+    <button class="order-btn" style="width:100%;margin-top:1rem;padding:1rem;font-size:1rem;" id="checkoutBtn">Checkout</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+   let cart = JSON.parse(localStorage.getItem('coffeeCart')) || [];
+    let currentPaymentMethod = 'cash';
+
+    const shopPage = document.getElementById('shopPage');
+    const checkoutPage = document.getElementById('checkoutPage');
+    const brandLogo = document.getElementById('brandLogo');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navBar = document.getElementById('nav');
+    const hamburger = document.getElementById('hamburger');
+    
+    const cartCount = document.getElementById('cartCount');
+    const cartBtn = document.getElementById('cartBtn');
+    const cartSidebar = document.getElementById('cartSidebar');
+    const closeCart = document.getElementById('closeCart');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+
+    const loginModal = document.getElementById('loginModal');
+    const loginBtn = document.getElementById('loginBtn');
+    const closeModal = document.getElementById('closeModal');
+    
+    const pinModal = document.getElementById('pinModal');
+    const closePinModal = document.getElementById('closePinModal');
+    const submitPinBtn = document.getElementById('submitPinBtn');
+    const walletPinInput = document.getElementById('walletPin');
+    
+    const qrisBox = document.getElementById('qrisBarcodeBox');
+    const toast = document.getElementById('toast');
+
+    function navigateToView(viewName) {
+      if(viewName === 'checkout') {
+        if(cart.length === 0) {
+          showToast('Keranjangnya masih kosong');
+          return;
+        }
+        shopPage.classList.remove('active-view');
+        checkoutPage.classList.add('active-view');
+
+        const finalTotalAmount = calculateCheckoutBilling();
+        document.getElementById('qrisInputAmount').value = finalTotalAmount;
+        
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      } else {
+        checkoutPage.classList.remove('active-view');
+        shopPage.classList.add('active-view');
+      }
+    }
+
+    brandLogo.addEventListener('click', () => navigateToView('shop'));
+
+    window.addEventListener('scroll', () => {
+      if(!shopPage.classList.contains('active-view')) return;
+      let current = 'home';
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        navigateToView('shop');
+        document.querySelector(link.getAttribute('href')).scrollIntoView({behavior: 'smooth'});
+        navBar.classList.remove('active');
+      });
+    });
+
+    hamburger.addEventListener('click', () => navBar.classList.toggle('active'));
+    
+    document.getElementById('orderNowBtn').addEventListener('click', () => {
+      document.getElementById('menu').scrollIntoView({behavior: 'smooth'});
+    });
+    
+    document.getElementById('seeMoreBtn').addEventListener('click', () => {
+      document.getElementById('bestseller').scrollIntoView({behavior: 'smooth'});
+    });
+
+    function updateCart() {
+      cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+      localStorage.setItem('coffeeCart', JSON.stringify(cart));
+      renderCart();
+      if(checkoutPage.classList.contains('active-view')) {
+        const finalTotalAmount = calculateCheckoutBilling();
+        document.getElementById('qrisInputAmount').value = finalTotalAmount;
+      }
+    }
+
+    function renderCart() {
+      cartItems.innerHTML = '';
+      let total = 0;
+      
+      if(cart.length === 0) {
+        cartItems.innerHTML = '<p style="opacity:0.7; text-align:center; padding: 20px;">Keranjang masih kosong</p>';
+      }
+      
+      cart.forEach((item, idx) => {
+        total += item.price * item.qty;
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <img src="${item.img}" alt="${item.name}">
+            <div style="flex:1">
+              <div style="font-weight:600">${item.name}</div>
+              <div style="font-size:0.9rem;opacity:0.8">Rp${item.price.toLocaleString('id-ID')} x ${item.qty}</div>
+            </div>
+            <span style="cursor:pointer; font-weight: bold; padding: 5px; color: #cc0000;" onclick="removeItem(${idx})">✕</span>
+          </div>`;
+      });
+      cartTotal.textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
+    }
+
+    window.removeItem = (idx) => { 
+      cart.splice(idx,1); 
+      updateCart(); 
+      showToast('Menu dihapus dari daftar'); 
+      if(cart.length === 0 && checkoutPage.classList.contains('active-view')) {
+        navigateToView('shop');
+      }
+    };
+
+    function addToCart(name, price, img) {
+      const existing = cart.find(item => item.name === name);
+      if(existing) {
+        existing.qty++;
+      } else {
+        cart.push({ name, price, img, qty: 1 });
+      }
+      updateCart();
+      showToast(`${name} asik pesanan kamu sudah masuk ke keranjang!`);
+    }
+
+    document.querySelectorAll('.product-card').forEach(card => {
+      const btn = card.querySelector('.add-to-cart-btn');
+      if(btn) {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const name = card.dataset.name;
+          const price = parseInt(card.dataset.price);
+          const img = card.dataset.img;
+          addToCart(name, price, img);
+        });
+      }
+    });
+
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const name = item.dataset.name;
+        const price = parseInt(item.dataset.price);
+        const img = item.dataset.img;
+        addToCart(name, price, img);
+      });
+    });
+    cartBtn.addEventListener('click', () => cartSidebar.classList.add('active'));
+    closeCart.addEventListener('click', () => cartSidebar.classList.remove('active'));
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      cartSidebar.classList.remove('active');
+      navigateToView('checkout');
+    });
+
+    window.togglePaymentSelection = (element, method) => {
+      document.querySelectorAll('.payment-method-item').forEach(item => item.classList.remove('selected'));
+      element.classList.add('selected');
+      currentPaymentMethod = method;
+      
+    
+      if(method === 'qris' || method === 'dana' || method === 'gopay') {
+        qrisBox.classList.add('active');
+      } else {
+        qrisBox.classList.remove('active');
+        document.getElementById('qrisQrCodeWrapper').style.display = 'none';
+      }
+    };
+
+    function calculateCheckoutBilling() {
+      const rawTotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const tax = Math.round(rawTotal * 0.1);
+      const finalTotal = rawTotal + tax;
+
+      document.getElementById('summaryItemsTotal').textContent = `Rp${rawTotal.toLocaleString('id-ID')}`;
+      document.getElementById('summaryTax').textContent = `Rp${tax.toLocaleString('id-ID')}`;
+      document.getElementById('summarySubtotal').textContent = `Rp${rawTotal.toLocaleString('id-ID')}`;
+      document.getElementById('summaryFinalTotal').textContent = `Rp${finalTotal.toLocaleString('id-ID')}`;
+      
+      return finalTotal; 
+    }
+
+    window.generateQrisDynamic = function() {
+      const amount = document.getElementById('qrisInputAmount').value;
+      const qrWrapper = document.getElementById('qrisQrCodeWrapper');
+      const qrImage = document.getElementById('qrisGeneratedImage');
+
+      if (!amount || amount <= 0) {
+        showToast('Nominal belanja tidak valid!');
+        return;
+      }
+
+      const qrData = `caffein lyai ${currentPaymentMethod.toUpperCase()}_Amount_${amount}`;
+      qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+
+      qrWrapper.style.display = 'block';
+      showToast(`QRIS ${currentPaymentMethod.toUpperCase()} senilai Rp${parseInt(amount).toLocaleString('id-ID')} berhasil dibuat!`);
+    }
+
+    document.getElementById('finalConfirmBtn').addEventListener('click', () => {
+      if(currentPaymentMethod === 'cash') {
+        processOrderSuccess();
+      } else {
+        document.getElementById('pinModalTitle').textContent = `PIN ${currentPaymentMethod.toUpperCase()}`;
+        walletPinInput.value = '';
+        pinModal.classList.add('active');
+      }
+    });
+
+    submitPinBtn.addEventListener('click', () => {
+      if(walletPinInput.value.length < 6) {
+        showToast('Masukkan 6 digit PIN pembayaran Anda!');
+        return;
+      }
+      pinModal.classList.remove('active');
+      processOrderSuccess();
+    });
+
+    function processOrderSuccess() {
+      showToast('📦 Pesanan Anda sedang di buat! Mohon tunggu sebentar.');
+      cart = [];
+      updateCart();
+      document.getElementById('customerNote').value = '';
+      document.getElementById('qrisQrCodeWrapper').style.display = 'none'; 
+      qrisBox.classList.remove('active');
+      setTimeout(() => {
+        navigateToView('shop');
+      }, 2500);
+    }
+
+    loginBtn.addEventListener('click', () => loginModal.classList.add('active'));
+    closeModal.addEventListener('click', () => loginModal.classList.remove('active'));
+    closePinModal.addEventListener('click', () => pinModal.classList.remove('active'));
+    
+    document.getElementById('submitLogin').addEventListener('click', () => {
+      showToast('Berhasil masuk akun!');
+      loginModal.classList.remove('active');
+    });
+
+    window.addEventListener('click', (e) => {
+      if(e.target === loginModal) loginModal.classList.remove('active');
+      if(e.target === pinModal) pinModal.classList.remove('active');
+    });
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    updateCart();
+
+  </script>
+</body>
+</html>
